@@ -1,10 +1,17 @@
 class Solution {
   bool isValid(String s) {
-   while (s.contains('()') || s.contains('[]') || s.contains('{}')) {
-    s = s.replaceAll('()', '');
-    s = s.replaceAll('[]', '');
-    s = s.replaceAll('{}', '');
+  Map<String, String> brackets = {')': '(', ']': '[', '}': '{'};
+  List<String> stack = [];
+  for (var char in s.split('')) {
+    if (brackets.values.contains(char)) {
+      stack.add(char);
+    } else {
+      String openingBracket = brackets[char]!;
+      if (stack.isEmpty || stack.removeLast() != openingBracket) {
+        return false;
+      }
+    }
   }
-  return s.isEmpty;
-  }
+  return stack.isEmpty;
+}
 }
